@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "547127935302",
+    "project_id": "mojiji-prova",
+    "storage_bucket": "mojiji-prova.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:547127935302:android:3ffe7d9583913d79c36547",
+        "android_client_info": {
+          "package_name": "com.example.mojiji"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "547127935302-bd907ts2chovb3fq5oq0u287i4t9qvlb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mojiji",
+            "certificate_hash": "4d901aa52dff89995494aabe2c4f66d0ee694ada"
+          }
+        },
+        {
+          "client_id": "547127935302-mo1n425h9fjr18k95b15ilm2q8bsc80q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsR7Od6-ChZ4JNmM_0O3xynHI0Za65IBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "547127935302-mo1n425h9fjr18k95b15ilm2q8bsc80q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
