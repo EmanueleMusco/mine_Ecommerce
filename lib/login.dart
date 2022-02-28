@@ -1,9 +1,10 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:mojiji/palette.dart';
 import 'widgets/widgets.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'form.dart';
 
 class Accesso extends StatelessWidget {
   const Accesso({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class Accesso extends StatelessWidget {
       children: [
         BackgroundImage(),
         Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,
           body: SafeArea(
             child: Column(
@@ -52,7 +54,7 @@ class Accesso extends StatelessWidget {
                             textStyle: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.normal,
-                              color: Colors.white,
+                              color: Colors.purpleAccent,
                             ),
                           ),
                         ],
@@ -63,25 +65,7 @@ class Accesso extends StatelessWidget {
                 SizedBox(
                   height: 100,
                 ),
-                Text(
-                  'email',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                Text(
-                  'password',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.white,
-                  ),
-                )
+                MyForm(),
               ],
             ),
           ),
