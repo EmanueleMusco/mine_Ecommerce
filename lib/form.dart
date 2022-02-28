@@ -24,7 +24,7 @@ class MyFormState extends State<MyForm> {
           //form
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
-            child: TextField(
+            child: TextFormField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Email',
@@ -37,6 +37,12 @@ class MyFormState extends State<MyForm> {
                 fontWeight: FontWeight.normal,
                 color: Colors.white,
               ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "L'email non può essere vuota";
+                }
+                return null;
+              },
             ),
           ),
           SizedBox(
@@ -44,7 +50,7 @@ class MyFormState extends State<MyForm> {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
-            child: TextField(
+            child: TextFormField(
               obscureText: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -58,16 +64,13 @@ class MyFormState extends State<MyForm> {
                 fontWeight: FontWeight.normal,
                 color: Colors.white,
               ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'La password non può essere vuota';
+                }
+                return null;
+              },
             ),
-          ),
-          TextFormField(
-            // The validator receives the text that the user has entered.
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
           ),
           ElevatedButton(
             onPressed: () {
@@ -80,7 +83,7 @@ class MyFormState extends State<MyForm> {
                 );
               }
             },
-            child: const Text('Submit'),
+            child: const Text('Accedi'),
           ),
         ],
       ),
