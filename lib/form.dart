@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'signup.dart';
 
 class MyForm extends StatefulWidget {
   const MyForm({Key? key}) : super(key: key);
@@ -29,7 +30,7 @@ class MyFormState extends State<MyForm> {
                 border: OutlineInputBorder(),
                 labelText: 'Email',
                 labelStyle: TextStyle(
-                  color: Colors.purpleAccent,
+                  color: Colors.white,
                 ),
               ),
               style: TextStyle(
@@ -37,6 +38,7 @@ class MyFormState extends State<MyForm> {
                 fontWeight: FontWeight.normal,
                 color: Colors.white,
               ),
+              //validator per email
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "L'email non può essere vuota";
@@ -56,7 +58,7 @@ class MyFormState extends State<MyForm> {
                 border: OutlineInputBorder(),
                 labelText: 'Password',
                 labelStyle: TextStyle(
-                  color: Colors.purpleAccent,
+                  color: Colors.white,
                 ),
               ),
               style: TextStyle(
@@ -64,14 +66,22 @@ class MyFormState extends State<MyForm> {
                 fontWeight: FontWeight.normal,
                 color: Colors.white,
               ),
+              //validator password
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'La password non può essere vuota';
+                } else if (value.length < 8) {
+                  return 'La password deve contenere almeno 8 caratteri';
                 }
                 return null;
               },
             ),
           ),
+          SizedBox(
+            height: 10,
+          ),
+          //altri metodi di accesso
+
           SizedBox(
             height: 10,
           ),
@@ -97,6 +107,72 @@ class MyFormState extends State<MyForm> {
                   color: Colors.white,
                 ),
               ),
+            ),
+          ),
+          SizedBox(height: 20),
+          Text(
+            'oppure',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.normal,
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(height: 20),
+          SizedBox(
+            width: 300,
+            height: 40,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignUpForm()),
+                );
+              },
+              child: const Text(
+                'Registrati',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            height: 40,
+            width: 300,
+            child: Row(
+              children: [
+                Text(
+                  'Puoi accedere con: ',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                // accesso con google
+                InkWell(
+                  onTap: () {},
+                  splashColor: Colors.white10,
+                  borderRadius: BorderRadius.circular(20),
+                  child: Ink.image(
+                    fit: BoxFit.cover,
+                    image: AssetImage(
+                      'assets/google.png',
+                    ),
+                    height: 30,
+                    width: 30,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
