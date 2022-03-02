@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'signup.dart';
+import 'package:sizer/sizer.dart';
 
 class MyForm extends StatefulWidget {
   const MyForm({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class MyFormState extends State<MyForm> {
         children: <Widget>[
           //form
           Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
+            padding: EdgeInsets.only(left: 2.h, right: 2.h),
             child: TextFormField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -34,7 +35,7 @@ class MyFormState extends State<MyForm> {
                 ),
               ),
               style: TextStyle(
-                fontSize: 30,
+                fontSize: 30.sp,
                 fontWeight: FontWeight.normal,
                 color: Colors.white,
               ),
@@ -48,10 +49,10 @@ class MyFormState extends State<MyForm> {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 2.h,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
+            padding: EdgeInsets.only(left: 2.h, right: 2.h),
             child: TextFormField(
               obscureText: true,
               decoration: InputDecoration(
@@ -62,7 +63,7 @@ class MyFormState extends State<MyForm> {
                 ),
               ),
               style: TextStyle(
-                fontSize: 30,
+                fontSize: 30.sp,
                 fontWeight: FontWeight.normal,
                 color: Colors.white,
               ),
@@ -78,16 +79,16 @@ class MyFormState extends State<MyForm> {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 2.h,
           ),
           //altri metodi di accesso
 
           SizedBox(
-            height: 10,
+            height: 2.h,
           ),
           SizedBox(
-            width: 300,
-            height: 40,
+            width: 70.w,
+            height: 5.h,
             child: ElevatedButton(
               onPressed: () {
                 // Validate returns true if the form is valid, or false otherwise.
@@ -95,44 +96,64 @@ class MyFormState extends State<MyForm> {
                   // If the form is valid, display a snackbar. In the real world,
                   // you'd often call a server or save the information in a database.
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing Data')),
+                    SnackBar(
+                        content: Text(
+                      'Accesso in corso...',
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.white,
+                      ),
+                    )),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                        content: Text(
+                      'Riprova',
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.red,
+                      ),
+                    )),
                   );
                 }
               },
-              child: const Text(
+              child: Text(
                 'Accedi',
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 30.sp,
                   fontWeight: FontWeight.normal,
                   color: Colors.white,
                 ),
               ),
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 2.h),
           Text(
             'oppure',
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 20.sp,
               fontWeight: FontWeight.normal,
               color: Colors.white,
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 2.h),
           SizedBox(
-            width: 300,
-            height: 40,
+            width: 70.w,
+            height: 5.h,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SignUpForm()),
+                  MaterialPageRoute(builder: (context) => SignUpForm()),
                 );
               },
-              child: const Text(
+              child: Text(
                 'Registrati',
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 30.sp,
                   fontWeight: FontWeight.normal,
                   color: Colors.white,
                 ),
@@ -140,23 +161,23 @@ class MyFormState extends State<MyForm> {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 2.h,
           ),
           SizedBox(
-            height: 40,
-            width: 300,
+            height: 6.h,
+            width: 70.w,
             child: Row(
               children: [
                 Text(
                   'Puoi accedere con: ',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.normal,
                     color: Colors.white,
                   ),
                 ),
                 SizedBox(
-                  width: 10,
+                  width: 2.w,
                 ),
                 // accesso con google
                 InkWell(
@@ -168,8 +189,8 @@ class MyFormState extends State<MyForm> {
                     image: AssetImage(
                       'assets/google.png',
                     ),
-                    height: 30,
-                    width: 30,
+                    height: 4.h,
+                    width: 9.w,
                   ),
                 ),
               ],

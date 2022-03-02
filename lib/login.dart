@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// implementare firebase, plugin e dependancies gia messe
 
 import 'package:flutter/material.dart';
 import 'package:mojiji/palette.dart';
 import 'widgets/widgets.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'form.dart';
+import 'package:sizer/sizer.dart';
 
 class Accesso extends StatelessWidget {
   const Accesso({Key? key}) : super(key: key);
@@ -21,7 +23,7 @@ class Accesso extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 30,
+                  height: 2.h,
                 ),
                 Container(
                   child: Center(
@@ -32,10 +34,10 @@ class Accesso extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 120,
+                  height: 9.h,
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 10.h,
                   child: Stack(
                     children: [
                       AnimatedTextKit(
@@ -44,7 +46,7 @@ class Accesso extends StatelessWidget {
                           FlickerAnimatedText(
                             'Benvenuto!',
                             textStyle: TextStyle(
-                              fontSize: 30,
+                              fontSize: 30.sp,
                               fontWeight: FontWeight.normal,
                               color: Colors.white,
                             ),
@@ -52,7 +54,7 @@ class Accesso extends StatelessWidget {
                           FlickerAnimatedText(
                             'Accedi!',
                             textStyle: TextStyle(
-                              fontSize: 30,
+                              fontSize: 30.sp,
                               fontWeight: FontWeight.normal,
                               color: Colors.purpleAccent,
                             ),
@@ -63,7 +65,7 @@ class Accesso extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 2.h,
                 ),
                 MyForm(),
               ],
