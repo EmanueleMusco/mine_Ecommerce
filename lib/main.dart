@@ -3,14 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 //installato plug in deice_preview ricordarsi di toglierlo
 
-void main() => runApp(
-      DevicePreview(
-        builder: (context) => App(), // Wrap your app
-      ),
-    );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(
+    DevicePreview(
+      builder: (context) => App(),
+    ),
+  );
+}
 
 class App extends StatelessWidget {
   @override
@@ -24,11 +29,16 @@ class App extends StatelessWidget {
           title: 'mojiji',
           home: Accesso(),
           theme: ThemeData(
-              primarySwatch: Colors.purple,
+              brightness: Brightness.light,
               textTheme:
                   GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
-              scaffoldBackgroundColor: const Color(0xffe7d7ff),
               visualDensity: VisualDensity.adaptivePlatformDensity),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            textTheme:
+                GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
+          ),
+          themeMode: ThemeMode.system,
           debugShowCheckedModeBanner: false,
         );
       },

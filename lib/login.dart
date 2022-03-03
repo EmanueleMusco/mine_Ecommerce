@@ -56,7 +56,7 @@ class Accesso extends StatelessWidget {
                             textStyle: TextStyle(
                               fontSize: 30.sp,
                               fontWeight: FontWeight.normal,
-                              color: Colors.purpleAccent,
+                              color: Colors.lightBlueAccent,
                             ),
                           ),
                         ],

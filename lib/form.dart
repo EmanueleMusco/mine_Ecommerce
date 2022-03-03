@@ -1,43 +1,47 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'signup.dart';
 import 'package:sizer/sizer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MyForm extends StatefulWidget {
   const MyForm({Key? key}) : super(key: key);
 
   @override
-  MyFormState createState() {
-    return MyFormState();
+  _MyFormState createState() {
+    return _MyFormState();
   }
 }
 
-class MyFormState extends State<MyForm> {
+class _MyFormState extends State<MyForm> {
   final _formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+
     return Form(
       key: _formKey,
       child: Column(
         children: <Widget>[
           //form
           Padding(
-            padding: EdgeInsets.only(left: 2.h, right: 2.h),
+            padding: EdgeInsets.only(left: 4.h, right: 4.h),
             child: TextFormField(
+              style: TextStyle(fontSize: 25.sp, color: Colors.white),
+              controller: emailController,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.sp)),
+                prefixIcon: Icon(Icons.email_rounded),
                 labelText: 'Email',
                 labelStyle: TextStyle(
                   color: Colors.white,
+                  fontWeight: FontWeight.normal,
                 ),
-              ),
-              style: TextStyle(
-                fontSize: 30.sp,
-                fontWeight: FontWeight.normal,
-                color: Colors.white,
               ),
               //validator per email
               validator: (value) {
@@ -52,20 +56,20 @@ class MyFormState extends State<MyForm> {
             height: 2.h,
           ),
           Padding(
-            padding: EdgeInsets.only(left: 2.h, right: 2.h),
+            padding: EdgeInsets.only(left: 4.h, right: 4.h),
             child: TextFormField(
+              style: TextStyle(fontSize: 25.sp, color: Colors.white),
+              controller: passwordController,
               obscureText: true,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.sp)),
+                prefixIcon: Icon(Icons.key),
                 labelText: 'Password',
                 labelStyle: TextStyle(
                   color: Colors.white,
+                  fontWeight: FontWeight.normal,
                 ),
-              ),
-              style: TextStyle(
-                fontSize: 30.sp,
-                fontWeight: FontWeight.normal,
-                color: Colors.white,
               ),
               //validator password
               validator: (value) {
@@ -90,22 +94,44 @@ class MyFormState extends State<MyForm> {
             width: 70.w,
             height: 5.h,
             child: ElevatedButton(
-              onPressed: () {
-                // Validate returns true if the form is valid, or false otherwise.
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0.sp),
+                  ),
+                ),
+              ),
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  // If the form is valid, display a snackbar. In the real world,
-                  // you'd often call a server or save the information in a database.
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                        content: Text(
-                      'Accesso in corso...',
-                      style: TextStyle(
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.white,
-                      ),
-                    )),
-                  );
+                  await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: emailController.text,
+                      password: passwordController.text);
+                  if (user == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text(
+                        'Errore Firebase',
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.red,
+                        ),
+                      )),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text(
+                        'Loggato',
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.white,
+                        ),
+                      )),
+                    );
+                  }
+                  setState(() {});
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -123,7 +149,7 @@ class MyFormState extends State<MyForm> {
               child: Text(
                 'Accedi',
                 style: TextStyle(
-                  fontSize: 30.sp,
+                  fontSize: 25.sp,
                   fontWeight: FontWeight.normal,
                   color: Colors.white,
                 ),
@@ -144,6 +170,13 @@ class MyFormState extends State<MyForm> {
             width: 70.w,
             height: 5.h,
             child: ElevatedButton(
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0.sp),
+                  ),
+                ),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -153,7 +186,7 @@ class MyFormState extends State<MyForm> {
               child: Text(
                 'Registrati',
                 style: TextStyle(
-                  fontSize: 30.sp,
+                  fontSize: 25.sp,
                   fontWeight: FontWeight.normal,
                   color: Colors.white,
                 ),
