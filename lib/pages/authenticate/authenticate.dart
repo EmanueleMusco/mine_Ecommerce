@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mojiji/pages/authenticate/accesso.dart';
 
 class Authenticate extends StatefulWidget {
   Authenticate({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('Authenticate'),
+      child: Accesso(),
     );
   }
 }

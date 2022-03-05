@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:mojiji/services/auth.dart';
 import '../authenticate/signup.dart';
 import 'package:sizer/sizer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,9 +17,12 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogIn extends State<LogIn> {
+  final AuthService _auth = AuthService();
+
   final _formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  String email = '';
+  String password = '';
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +36,10 @@ class _LogIn extends State<LogIn> {
           Padding(
             padding: EdgeInsets.only(left: 4.h, right: 4.h),
             child: TextFormField(
+              onChanged: (value) {
+                setState(() => email = value);
+              },
               style: TextStyle(fontSize: 25.sp, color: Colors.white),
-              controller: emailController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.sp)),
@@ -58,8 +64,10 @@ class _LogIn extends State<LogIn> {
           Padding(
             padding: EdgeInsets.only(left: 4.h, right: 4.h),
             child: TextFormField(
+              onChanged: (value) {
+                setState(() => password = value);
+              },
               style: TextStyle(fontSize: 25.sp, color: Colors.white),
-              controller: passwordController,
               obscureText: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -116,17 +124,12 @@ class _LogIn extends State<LogIn> {
               ),
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  try {
-                    UserCredential user = await FirebaseAuth.instance
-                        .signInWithEmailAndPassword(
-                            email: emailController.text,
-                            password: passwordController.text);
-                  } on FirebaseAuthException catch (e) {
-                    if (e.code == 'user-not-found') {
-                      print('No user found for that email.');
-                    } else if (e.code == 'wrong-password') {
-                      print('Wrong password provided for that user.');
-                    }
+                  dynamic result =
+                      await _auth.signInWithEmailAndPassword(email, password);
+                  if (result == null) {
+                    setState(() {
+                      error = 'Email o password errata';
+                    });
                   }
                 }
               },

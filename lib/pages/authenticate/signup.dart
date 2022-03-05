@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 import 'package:sizer/sizer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mojiji/services/auth.dart';
 
 class SignUpForm extends StatefulWidget {
   SignUpForm({Key? key}) : super(key: key);
@@ -15,10 +16,12 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
+  final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confPass = TextEditingController();
+  String email = '';
+  String password = '';
+  String confPass = '';
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +109,9 @@ class _SignUpFormState extends State<SignUpForm> {
                   Padding(
                     padding: EdgeInsets.only(left: 4.h, right: 4.h),
                     child: TextFormField(
+                      onChanged: (value) {
+                        setState(() => email = value);
+                      },
                       style: TextStyle(
                         fontSize: 25.sp,
                       ),
@@ -133,10 +139,12 @@ class _SignUpFormState extends State<SignUpForm> {
                   Padding(
                     padding: EdgeInsets.only(left: 4.h, right: 4.h),
                     child: TextFormField(
+                      onChanged: (value) {
+                        setState(() => password = value);
+                      },
                       style: TextStyle(
                         fontSize: 25.sp,
                       ),
-                      controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -164,7 +172,9 @@ class _SignUpFormState extends State<SignUpForm> {
                   Padding(
                     padding: EdgeInsets.only(left: 4.h, right: 4.h),
                     child: TextFormField(
-                      controller: confPass,
+                      onChanged: (value) {
+                        setState(() => confPass = value);
+                      },
                       style: TextStyle(
                         fontSize: 25.sp,
                       ),
@@ -183,7 +193,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           return 'La password non può essere vuota';
                         } else if (value.length < 8) {
                           return 'La password deve contenere almeno 8 caratteri';
-                        } else if (passwordController.text != confPass.text) {
+                        } else if (password != confPass) {
                           return 'La password deve corrispondere';
                         }
                         return null;
@@ -207,20 +217,12 @@ class _SignUpFormState extends State<SignUpForm> {
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          try {
-                            UserCredential user = await FirebaseAuth.instance
-                                .createUserWithEmailAndPassword(
-                                    email: emailController.text,
-                                    password: passwordController.text);
-                          } on FirebaseAuthException catch (e) {
-                            if (e.code == 'weak-password') {
-                              print('The password provided is too weak.');
-                            } else if (e.code == 'email-already-in-use') {
-                              print(
-                                  'The account already exists for that email.');
-                            }
-                          } catch (e) {
-                            print(e);
+                          dynamic result = await _auth
+                              .registerWithEmailAndPassword(email, password);
+                          if (result == null) {
+                            setState(() {
+                              error = 'Metti un email valida';
+                            });
                           }
                         }
                       },
