@@ -1,11 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-// implementare firebase, plugin e dependancies gia messe
 
 import 'package:flutter/material.dart';
-import 'package:mojiji/palette.dart';
-import 'widgets/widgets.dart';
+import 'package:mojiji/pages/palette.dart';
+import '../widgets/widgets.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'form.dart';
+import '../pages/authenticate/login.dart';
 import 'package:sizer/sizer.dart';
 
 class Accesso extends StatelessWidget {
@@ -23,7 +22,7 @@ class Accesso extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 2.h,
+                  height: 8.h,
                 ),
                 Container(
                   child: Center(
@@ -43,7 +42,7 @@ class Accesso extends StatelessWidget {
                       AnimatedTextKit(
                         repeatForever: true,
                         animatedTexts: [
-                          FlickerAnimatedText(
+                          FadeAnimatedText(
                             'Benvenuto!',
                             textStyle: TextStyle(
                               fontSize: 30.sp,
@@ -51,7 +50,7 @@ class Accesso extends StatelessWidget {
                               color: Colors.white,
                             ),
                           ),
-                          FlickerAnimatedText(
+                          FadeAnimatedText(
                             'Accedi!',
                             textStyle: TextStyle(
                               fontSize: 30.sp,
@@ -67,7 +66,7 @@ class Accesso extends StatelessWidget {
                 SizedBox(
                   height: 2.h,
                 ),
-                MyForm(),
+                LogIn(),
               ],
             ),
           ),
@@ -76,14 +75,3 @@ class Accesso extends StatelessWidget {
     );
   }
 }
-
-
-/*
-Text(
-'Benvenuto!',
-style: TextStyle(
-fontSize: 30,
-fontWeight: FontWeight.normal,
- color: Colors.white,
-),
-), */

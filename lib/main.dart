@@ -1,9 +1,12 @@
-import 'login.dart';
+// ignore_for_file: prefer_const_constructors
+
+import 'pages/accesso.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 
 //installato plug in deice_preview ricordarsi di toglierlo
 
@@ -15,6 +18,9 @@ void main() async {
       builder: (context) => App(),
     ),
   );
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
 }
 
 class App extends StatelessWidget {
@@ -30,10 +36,12 @@ class App extends StatelessWidget {
           home: Accesso(),
           theme: ThemeData(
               brightness: Brightness.light,
+              primaryColor: Colors.white,
               textTheme:
                   GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
               visualDensity: VisualDensity.adaptivePlatformDensity),
           darkTheme: ThemeData(
+            primaryColorDark: Colors.black,
             brightness: Brightness.dark,
             textTheme:
                 GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
@@ -45,22 +53,3 @@ class App extends StatelessWidget {
     );
   }
 }
-
-/* 
-class App extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'mojiji',
-      home: Accesso(),
-      theme: ThemeData(
-          primarySwatch: Colors.purple,
-          textTheme:
-              GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
-          scaffoldBackgroundColor: const Color(0xffe7d7ff),
-          visualDensity: VisualDensity.adaptivePlatformDensity),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-} 
-*/
