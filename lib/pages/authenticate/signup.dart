@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'login.dart';
 import 'package:sizer/sizer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mojiji/services/auth.dart';
+import 'package:mojiji/services/auth_service.dart';
 
 class SignUpForm extends StatefulWidget {
   SignUpForm({Key? key}) : super(key: key);
@@ -16,15 +17,14 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
-  String email = '';
-  String password = '';
-  String confPass = '';
-  String error = '';
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
+    final confPass = TextEditingController();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -109,9 +109,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   Padding(
                     padding: EdgeInsets.only(left: 4.h, right: 4.h),
                     child: TextFormField(
-                      onChanged: (value) {
-                        setState(() => email = value);
-                      },
+                      controller: emailController,
                       style: TextStyle(
                         fontSize: 25.sp,
                       ),
@@ -139,9 +137,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   Padding(
                     padding: EdgeInsets.only(left: 4.h, right: 4.h),
                     child: TextFormField(
-                      onChanged: (value) {
-                        setState(() => password = value);
-                      },
+                      controller: passwordController,
                       style: TextStyle(
                         fontSize: 25.sp,
                       ),
@@ -172,9 +168,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   Padding(
                     padding: EdgeInsets.only(left: 4.h, right: 4.h),
                     child: TextFormField(
-                      onChanged: (value) {
-                        setState(() => confPass = value);
-                      },
+                      controller: confPass,
                       style: TextStyle(
                         fontSize: 25.sp,
                       ),
@@ -193,7 +187,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           return 'La password non può essere vuota';
                         } else if (value.length < 8) {
                           return 'La password deve contenere almeno 8 caratteri';
-                        } else if (password != confPass) {
+                        } else if (passwordController.text != confPass.text) {
                           return 'La password deve corrispondere';
                         }
                         return null;
@@ -217,13 +211,8 @@ class _SignUpFormState extends State<SignUpForm> {
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          dynamic result = await _auth
-                              .registerWithEmailAndPassword(email, password);
-                          if (result == null) {
-                            setState(() {
-                              error = 'Metti un email valida';
-                            });
-                          }
+                          await authService.createUserWithEmailAndPassword(
+                              emailController.text, passwordController.text);
                         }
                       },
                       child: Text(

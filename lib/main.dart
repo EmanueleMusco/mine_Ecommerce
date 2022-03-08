@@ -1,17 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:mojiji/pages/wrapper.dart';
-import 'package:mojiji/services/auth.dart';
+import 'package:mojiji/services/auth_service.dart';
 import 'package:provider/provider.dart';
-
-import 'pages/authenticate/accesso.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
-import 'package:mojiji/models/user.dart';
 
 //installato plug in deice_preview ricordarsi di toglierlo
 
@@ -33,9 +30,12 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) {
-        return StreamProvider<UserClass?>.value(
-          initialData: null,
-          value: AuthService().user,
+        return MultiProvider(
+          providers: [
+            Provider<AuthService>(
+              create: (_) => AuthService(),
+            )
+          ],
           child: MaterialApp(
             useInheritedMediaQuery: true,
             locale: DevicePreview.locale(context),

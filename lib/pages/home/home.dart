@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mojiji/services/auth.dart';
+import 'package:mojiji/services/auth_service.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mojiji/services/auth.dart';
+import 'package:mojiji/services/auth_service.dart';
 
 class Home extends StatelessWidget {
-  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
     return Scaffold(
       body: Center(
         child: Column(
@@ -26,10 +27,10 @@ class Home extends StatelessWidget {
                   ),
                 ),
                 onPressed: () async {
-                  await _auth.signOut();
+                  await authService.signOut();
                 },
                 child: Text(
-                  'SignOut',
+                  'Sign Out',
                   style: TextStyle(
                     fontSize: 25.sp,
                     fontWeight: FontWeight.normal,

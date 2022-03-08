@@ -1,7 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:mojiji/services/auth.dart';
+import 'package:mojiji/services/auth_service.dart';
+import 'package:provider/provider.dart';
 import '../authenticate/signup.dart';
 import 'package:sizer/sizer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,16 +18,13 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogIn extends State<LogIn> {
-  final AuthService _auth = AuthService();
-
   final _formKey = GlobalKey<FormState>();
-  String email = '';
-  String password = '';
-  String error = '';
 
   @override
   Widget build(BuildContext context) {
-    User? user = FirebaseAuth.instance.currentUser;
+    final authService = Provider.of<AuthService>(context);
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
 
     return Form(
       key: _formKey,
@@ -36,9 +34,7 @@ class _LogIn extends State<LogIn> {
           Padding(
             padding: EdgeInsets.only(left: 4.h, right: 4.h),
             child: TextFormField(
-              onChanged: (value) {
-                setState(() => email = value);
-              },
+              controller: emailController,
               style: TextStyle(fontSize: 25.sp, color: Colors.white),
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -64,9 +60,7 @@ class _LogIn extends State<LogIn> {
           Padding(
             padding: EdgeInsets.only(left: 4.h, right: 4.h),
             child: TextFormField(
-              onChanged: (value) {
-                setState(() => password = value);
-              },
+              controller: passwordController,
               style: TextStyle(fontSize: 25.sp, color: Colors.white),
               obscureText: true,
               decoration: InputDecoration(
@@ -124,13 +118,8 @@ class _LogIn extends State<LogIn> {
               ),
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  dynamic result =
-                      await _auth.signInWithEmailAndPassword(email, password);
-                  if (result == null) {
-                    setState(() {
-                      error = 'Email o password errata';
-                    });
-                  }
+                  await authService.signInWithEmailAndPassword(
+                      emailController.text, passwordController.text);
                 }
               },
               child: Text(
